@@ -23,12 +23,14 @@
         {
             return Products.Dequeue();
         }
-        public void AdminDispense(int amount)
+        public List<Product> AdminDispense(int amount)
         {
+            List<Product> products = new();
             for (int i = 0; i < amount; i++)
             {
-                Products.Dequeue();
+                products.Add(Products.Dequeue());
             }
+            return products;
         }
         public Ware(int position, double price,Queue<Product> products, string name)
         {

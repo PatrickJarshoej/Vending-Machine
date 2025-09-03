@@ -41,19 +41,19 @@ namespace VendingConsole
                 Console.WriteLine("2: Admin Shit");
                 Console.WriteLine("3: Would you like die?");
                 int choice = Int32.Parse(Console.ReadLine());
-                //vendingMachine.Purchase(52,23);
 
                 switch (choice)
                 {
                     case 1:
                         Console.WriteLine("What would you like to buy");
                         int i = 0;
-                        foreach (KeyValuePair<int,Ware> w in vendingMachine.Wares)
+                        foreach (KeyValuePair<int,Ware> w in vendingMachine.Wares) //Writes out all wares
                         {
                             i++;
                             Console.WriteLine($"{w.Key}:    {w.Value.Name}     {w.Value.Price} kr");
-                        }
-                        choice = Int32.Parse(Console.ReadLine());
+                        } //Show the key, name and price
+
+                        choice = Int32.Parse(Console.ReadLine()); //The choice is the key
                         vendingMachine.SearchForProduct(choice);
 
                         Console.WriteLine("Insert money");
@@ -68,6 +68,8 @@ namespace VendingConsole
                         Console.WriteLine("2: Dispense");
                         Console.WriteLine("3: Fill up coins");
                         Console.WriteLine("4: Change Price");
+                        Console.WriteLine("5: Add new Ware");
+                        Console.WriteLine("6: Remove old Ware");
                         choice = Int32.Parse(Console.ReadLine());
                         switch (choice)
                         {
@@ -97,16 +99,55 @@ namespace VendingConsole
                                 Console.WriteLine("How many?");
                                 int dispenseAmount = Int32.Parse(Console.ReadLine());
                                 vendingMachine.Wares[choice].AdminDispense(dispenseAmount);
+                                Console.WriteLine(vendingMachine.Wares[choice].Products.Count);
                                 break;
                             case 3:
+                                Console.WriteLine("What coin type would you like to fill up?");
+                                j = 0;
+                                foreach (KeyValuePair<string, double> c in vendingMachine.Coins)
+                                {
+                                    j++;
+                                    Console.WriteLine($"{c.Key}:    {c.Value}");
+                                }
+                                string choice2 = Console.ReadLine();
+                                Console.WriteLine("How many?");
+
+                                double coinAmount = Int32.Parse(Console.ReadLine());
+                                vendingMachine.Coins[choice2] = vendingMachine.Coins[choice2] + coinAmount;
+
+                                break;
+                            case 4:
+                                Console.WriteLine("What price would you like to change?");
+                                j = 0;
+                                foreach (KeyValuePair<int, Ware> w in vendingMachine.Wares)
+                                {
+                                    j++;
+                                    Console.WriteLine($"{w.Key}:    {w.Value.Name}     {w.Value.Products.Count} left");
+                                }
+                                choice = Int32.Parse(Console.ReadLine());
+                                Console.WriteLine("What would you like to change it to?");
+                                int newPrice = Int32.Parse(Console.ReadLine());
+                                vendingMachine.Wares[choice].Price = newPrice;
+
+                                break;
+                            case 5:
+                                Console.WriteLine("What is the name of this Ware?");
+                                string pName = Console.ReadLine();
+                                Console.WriteLine("What is the key of this Ware?");
+                                int pKey = Int32.Parse(Console.ReadLine());
+                                Console.WriteLine("What is the price of this Ware?");
+                                double pPrice = double.Parse(Console.ReadLine());
+
+                                vendingMachine.AddNewWare(pName, pKey, pPrice);
+
+                                break;
+
+                            case 6:
+                                Console.WriteLine("What ware would you like to remove?");
+                                int key = Int32.Parse(Console.ReadLine());
+                                vendingMachine.RemoveWare(key);
                                 break;
                         }
-
-
-
-
-
-
                         break;
                     case 3:
 

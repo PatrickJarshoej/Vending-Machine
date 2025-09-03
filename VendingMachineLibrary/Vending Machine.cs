@@ -113,16 +113,15 @@ namespace VendingMachineLibrary
 
         }
 
-        public List<Ware> GetAll()
+        public void AddNewWare(string pName, int key, double price)
         {
-            List<Ware> wares = new();
-            foreach (KeyValuePair<int, Ware> p in Wares)
-            {
-                wares.Add(p.Value);
-            }
-            return wares;
-            
+            Wares.Add(key, new Ware(key, price, new Queue<Product>(), pName));
         }
+        public void RemoveWare(int key)
+        {
+            Wares.Remove(key);
+        }
+
         private double CalculateReturn(double userBalance, Ware p)
         {
             //Debug.WriteLine("User balance is: " + userBalance);
@@ -196,9 +195,6 @@ namespace VendingMachineLibrary
         }
        
 
-
-
-        public Vending_Machine() { }
         public Vending_Machine(Dictionary<int, Ware> wares,Dictionary<string, double> coins) 
         {
             Wares = wares;
