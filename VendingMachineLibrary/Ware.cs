@@ -5,7 +5,7 @@
         public int Position { get; set; }
         //public int AmountLeft { get; set; }
         public double Price { get; set; }
-        Queue<Product> Products { get; set; }
+        public Queue<Product> Products { get; set; }
         public string Name { get; set; }
 
         public int CheckAmount()
@@ -22,6 +22,13 @@
         public Product Dispense()
         {
             return Products.Dequeue();
+        }
+        public void AdminDispense(int amount)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                Products.Dequeue();
+            }
         }
         public Ware(int position, double price,Queue<Product> products, string name)
         {

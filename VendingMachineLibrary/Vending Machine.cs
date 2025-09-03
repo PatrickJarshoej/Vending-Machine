@@ -35,8 +35,6 @@ namespace VendingMachineLibrary
         }
         public Product? Purchase(double userBalance,int position)
         {
-            CheckUserBalance(userBalance);
-            //double userBalance = 23.5;
             if (SearchForProduct(position) == true)
             {
                 //Product p = Products[position].;
@@ -50,6 +48,7 @@ namespace VendingMachineLibrary
                 { 
                     if (userBalance == Wares[position].Price)
                     {
+                        CheckUserBalance(userBalance);
                         return Wares[position].Dispense();
                         //Return product
                     }
@@ -64,12 +63,11 @@ namespace VendingMachineLibrary
                         //Calculate return money
                         if (CalculateReturn(userBalance, Wares[position]) == 0 )
                         {
+                            CheckUserBalance(userBalance);
                             return Wares[position].Dispense();
                         }
                         else
                         {
-                            //Not enough money in storage
-                            Debug.WriteLine("Not enough money in storage");
                             Console.WriteLine("Not enough money in storage");
                             return null;
                         }
@@ -84,7 +82,7 @@ namespace VendingMachineLibrary
             }
 
         }
-        public void CheckUserBalance(int userBalance)
+        public void CheckUserBalance(double userBalance)
         {
             double tempBalance = userBalance;
 
@@ -94,44 +92,25 @@ namespace VendingMachineLibrary
             
             double tens = Math.Floor(tempBalance / 10);
             tempBalance = tempBalance - 10 * tens;
-            Coins["Coin 10"] += twenties;
+            Coins["Coin 10"] += tens;
 
 
             double fives = Math.Floor(tempBalance / 5);
-            if (Coins["Coin 5"] >= fives)
-            {
-                tempBalance = tempBalance - 5 * fives;
-                Debug.WriteLine("User balance is: " + tempBalance + " after calc 5");
-            }
-            else { fives = 0; }
+            tempBalance = tempBalance - 5 * fives;
+            Coins["Coin 5"] += fives;    
 
             double twos = Math.Floor(tempBalance / 2);
-            if (Coins["Coin 2"] >= twos)
-            {
-                tempBalance = tempBalance - 2 * twos;
-                Debug.WriteLine("User balance is: " + tempBalance + " after calc 2");
-            }
-            else { twos = 0; }
+            tempBalance = tempBalance - 2 * twos;
+            Coins["Coin 2"] += twos;    
 
             double ones = Math.Floor(tempBalance / 1);
-            if (Coins["Coin 1"] >= ones)
-            {
-                tempBalance = tempBalance - 1 * ones;
-                Debug.WriteLine("User balance is: " + tempBalance + " after calc 1");
-            }
-            else { ones = 0; }
+            tempBalance = tempBalance - 1 * twos;
+            Coins["Coin 1"] += twos;    
 
             double halves = Math.Floor(tempBalance / 0.5);
-            if (Coins["Coin 0.5"] >= halves)
-            {
-                tempBalance = tempBalance - 0.5 * halves;
-                Debug.WriteLine("User balance is: " + tempBalance + " after calc 0.5");
-            }
-            else
-            {
-                halves = 0;
-                //insufficient funds
-            }
+            tempBalance = tempBalance - 0.5 * halves;
+            Coins["Coin 0.5"] += halves;            
+
         }
 
         public List<Ware> GetAll()

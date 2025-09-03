@@ -21,10 +21,10 @@ namespace VendingConsole
 
             Dictionary<int, Ware> wares = new()
             {
-                {11, new Ware(11, 15.5, new Queue<Product>(), "Fish")},     //Position, Name, Amount Left, Price
-                {12, new Ware(12, 30, new Queue<Product>(), "Chips")},      //Position, Name, Amount Left, Price
-                {21, new Ware(21, 10, new Queue<Product>(), "White Monster")},     //Position, Name, Amount Left, Price
-                {22, new Ware(22, 20, new Queue<Product>(), "Rio Punch Monster")}     //Position, Name, Amount Left, Price
+                {11, new Ware(11, 15.5, new Queue<Product>(), "Fish")},     //Position, Price, Queue of objects, Name
+                {12, new Ware(12, 30, new Queue<Product>(), "Chips")},      //Position, Price, Queue of objects, Name
+                {21, new Ware(21, 10, new Queue<Product>(), "White Monster")},     //Position, Price, Queue of objects, Name
+                {22, new Ware(22, 20, new Queue<Product>(), "Rio Punch Monster")}     //Position, Price, Queue of objects, Name
             };
 
             wares[11].Refill(13);
@@ -63,6 +63,49 @@ namespace VendingConsole
 
                         break;
                     case 2:
+                        Console.WriteLine("What would you like to do?");
+                        Console.WriteLine("1: Restock");
+                        Console.WriteLine("2: Dispense");
+                        Console.WriteLine("3: Fill up coins");
+                        Console.WriteLine("4: Change Price");
+                        choice = Int32.Parse(Console.ReadLine());
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine("What would you like to restock?");
+                                int j = 0;
+                                foreach (KeyValuePair<int, Ware> w in vendingMachine.Wares)
+                                {
+                                    j++;
+                                    Console.WriteLine($"{w.Key}:    {w.Value.Name}     {w.Value.Products.Count} left");
+                                }
+                                choice = Int32.Parse(Console.ReadLine());
+                                Console.WriteLine("How many?");
+                                int refillAmount = Int32.Parse(Console.ReadLine());
+                                vendingMachine.Wares[choice].Refill(refillAmount);
+
+                                break;
+                            case 2:
+                                Console.WriteLine("What would you like to Dispense?");
+                                j = 0;
+                                foreach (KeyValuePair<int, Ware> w in vendingMachine.Wares)
+                                {
+                                    j++;
+                                    Console.WriteLine($"{w.Key}:    {w.Value.Name}     {w.Value.Products.Count} left");
+                                }
+                                choice = Int32.Parse(Console.ReadLine());
+                                Console.WriteLine("How many?");
+                                int dispenseAmount = Int32.Parse(Console.ReadLine());
+                                vendingMachine.Wares[choice].AdminDispense(dispenseAmount);
+                                break;
+                            case 3:
+                                break;
+                        }
+
+
+
+
+
 
                         break;
                     case 3:
@@ -78,16 +121,12 @@ namespace VendingConsole
                                 break;
                             case 2:
                                 int a = 0;
-                                Console.WriteLine(a / 0);
+                                Console.WriteLine(a / a);
                                 break;
                         }
-                        
                         break;
-                    
                 }
             }
-            
-
         }
     }
 }
