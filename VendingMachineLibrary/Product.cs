@@ -9,13 +9,9 @@ namespace VendingMachineLibrary
     public class Product : Ware
     {
         public string Name { get; set; }
-    
-        
-
         public Product(string name)
         {
             Name = name;
         }
-        
     }
 }

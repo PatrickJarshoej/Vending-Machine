@@ -45,13 +45,11 @@ namespace VendingConsole
                 switch (choice)
                 {
                     case 1:
-                        Console.WriteLine("What would you like to buy");
-                        int i = 0;
+                        Console.WriteLine("What would you like to buy, insert the number in front, not the name");
                         foreach (KeyValuePair<int,Ware> w in vendingMachine.Wares) //Writes out all wares
                         {
-                            i++;
                             Console.WriteLine($"{w.Key}:    {w.Value.Name}     {w.Value.Price} kr");
-                        } //Show the key, name and price
+                        } //Shows the key, name and price
 
                         choice = Int32.Parse(Console.ReadLine()); //The choice is the key
                         vendingMachine.SearchForProduct(choice);
@@ -59,8 +57,7 @@ namespace VendingConsole
                         Console.WriteLine("Insert money");
                         int money = Int32.Parse(Console.ReadLine());
 
-                        vendingMachine.Purchase(money, choice);
-
+                        Console.WriteLine(vendingMachine.Purchase(money, choice).Name + " Has been dispensed");
                         break;
                     case 2:
                         Console.WriteLine("What would you like to do?");
@@ -75,10 +72,8 @@ namespace VendingConsole
                         {
                             case 1:
                                 Console.WriteLine("What would you like to restock?");
-                                int j = 0;
                                 foreach (KeyValuePair<int, Ware> w in vendingMachine.Wares)
                                 {
-                                    j++;
                                     Console.WriteLine($"{w.Key}:    {w.Value.Name}     {w.Value.Products.Count} left");
                                 }
                                 choice = Int32.Parse(Console.ReadLine());
@@ -89,26 +84,27 @@ namespace VendingConsole
                                 break;
                             case 2:
                                 Console.WriteLine("What would you like to Dispense?");
-                                j = 0;
+
                                 foreach (KeyValuePair<int, Ware> w in vendingMachine.Wares)
                                 {
-                                    j++;
                                     Console.WriteLine($"{w.Key}:    {w.Value.Name}     {w.Value.Products.Count} left");
                                 }
                                 choice = Int32.Parse(Console.ReadLine());
+                                
                                 Console.WriteLine("How many?");
                                 int dispenseAmount = Int32.Parse(Console.ReadLine());
+
                                 vendingMachine.Wares[choice].AdminDispense(dispenseAmount);
                                 Console.WriteLine(vendingMachine.Wares[choice].Products.Count);
                                 break;
                             case 3:
                                 Console.WriteLine("What coin type would you like to fill up?");
-                                j = 0;
+
                                 foreach (KeyValuePair<string, double> c in vendingMachine.Coins)
                                 {
-                                    j++;
                                     Console.WriteLine($"{c.Key}:    {c.Value}");
                                 }
+
                                 string choice2 = Console.ReadLine();
                                 Console.WriteLine("How many?");
 
